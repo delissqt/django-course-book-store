@@ -32,3 +32,35 @@ python manage.py migrate
 if null=False is set, you hace to ensuere that mose default value is set in case of blank values
 
 Exception: CharFields (and related types) -> The default value here is an empty string and null=True therefore typically should be avoided 
+
+
+---
+Adding Data in Data Base from python Terminal
+
+## open python shell
+python manage.py shell
+
+## add data in table Book
+
+from book_outlet.models import Book
+
+harry_potter = Book(title="Harry Potter" , rating = 5)
+
+
+## display data
+Book.objects.all()
+Book.objects.all()[0]
+
+### this data is saved in memory
+
+## save data in the database
+
+harry_potter.save()
+
+## update data
+
+harry_potter.title = "Harry Potter and Philosopher's Stone"
+
+
+## delete data
+harry_potter.delete()
