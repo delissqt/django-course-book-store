@@ -104,3 +104,25 @@ Is possible remove "Q" call in the last contiditions this still works, This only
 but we can also add the AND conditions using "Q" class
 
 `Book.objects.filter(Q(author="J.K. rowling"), Q(rating__lt=3) | Q(is_bestselling=False))`
+
+
+---
+Query performance
+
+store query in variable
+returns a query set which itself is an object on which we can again call filter to narrow it down even more 
+and you can do it at how often you want.
+
+`bestsellers = Book.objects.filter(is_bestselling=True)`  
+
+`amazing_bestsellers = bestsellers.filter(rating__gt=4)`
+
+but nonetheless, the database wasn't touched yet which is good for perormance of course.
+Django will only reach out the database and do something with it once you do something with your query sets
+
+`print(bestsellers)` // Django run the query
+
+`print(amazing_bestsellers)` // Django is even able to do this 
+
+
+
