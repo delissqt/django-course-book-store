@@ -124,5 +124,15 @@ Django will only reach out the database and do something with it once you do som
 
 `print(amazing_bestsellers)` // Django is even able to do this 
 
+---
 
+Bulk Operations
+
+Besides operations on individual model instances (i.e. deleting one model instance, updating one model instance etc), you can also perform bulk operations:
+
+    You can delete multiple model instances (i.e. database records) at once: https://docs.djangoproject.com/en/3.1/topics/db/queries/#deleting-objects
+
+    You can update multiple model instances (i.e. database records) at once: https://docs.djangoproject.com/en/3.0/ref/models/querysets/#bulk-update
+
+    You can create multiple model instances (i.e. database records) at once: https://docs.djangoproject.com/en/3.0/ref/models/querysets/#bulk-create
 
