@@ -10,7 +10,9 @@
     <ul>
         {% for book in books %}
         <li>
-            {{ book.title }} (Rating: {{ book.rating }})
+            <!--<a href="{% url "book_detail" id=book.id %}" >-->
+            <a href="{{ book.get_absolute_url }}" >{{ book.title }}</a>
+             (Rating: {{ book.rating }})
         </li>
         {% endfor %}
         
