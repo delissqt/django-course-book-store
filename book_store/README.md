@@ -136,3 +136,38 @@ Besides operations on individual model instances (i.e. deleting one model instan
 
     You can create multiple model instances (i.e. database records) at once: https://docs.djangoproject.com/en/3.0/ref/models/querysets/#bulk-create
 
+
+
+---
+
+Get title in order to generate slug
+
+from book_outlet.models import Book
+
+```
+Book.objects.all()
+
+Book.objects.get(title="Harry Potter").save()
+Book.objects.get(title="Harry Potter").slug
+$ 'harry-potter'
+```
+
+
+---
+
+Examples with order_by()
+
+* display the data in alphabetic order
+  
+`Book.objects.all().order_by("title")`
+
+* display tha data in inverse order adding minus "-" character
+
+`Book.objects.all().order_by("-title")` 
+
+
+This also works with numbers data
+
+`Book.objects.all().order_by("rating")`
+
+`Book.objects.all().order_by("-rating")`
