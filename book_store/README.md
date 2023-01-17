@@ -171,3 +171,9 @@ This also works with numbers data
 `Book.objects.all().order_by("rating")`
 
 `Book.objects.all().order_by("-rating")`
+
+---
+
+python manage.py createsuperuser
+
+insert username, email address, password, password (again):
