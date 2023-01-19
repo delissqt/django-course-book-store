@@ -152,6 +152,12 @@ Book.objects.get(title="Harry Potter").slug
 $ 'harry-potter'
 ```
 
+---
+Delete all data in the storage in Data Base
+
+`Book.objects.all().delete()`
+
+---
 
 ---
 
@@ -185,3 +191,26 @@ Different Kinds of Relationships
 | One-to-Many | One-to-One | Many-tom-Many |
 |-------------|------------|---------------|
 | One bokk as one author, one author wrote multiple books | One author has one address, one address belongs to one author | A book can be published in many countries, a country can publish many books |
+
+
+# Adding a one-to-many Relation & Migration
+
+Example
+
+```
+class Author(models.model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+
+class Book(models.Model):
+    title = models.CharField(max_length=40)
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    author = models.CharField(null=True, max_length=100)
+    is_bestselling = models.BooleanField(default=False)
+    slug = models.SlugField(default="", blank=True, null=False) 
+    author = models.ForeignKey(Author)
+    # For a author we store a pointer to an author entry in the Author table.
+    # Here we wanna connect our book to an author (Author model name)
+
+```
+
