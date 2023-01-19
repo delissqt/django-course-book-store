@@ -16,7 +16,8 @@ class Book(models.Model):
     author = models.CharField(null=True, max_length=100)
     is_bestselling = models.BooleanField(default=False)
     slug = models.SlugField(default="", blank=True, null=False, db_index=True) # Harry Potter 1 => harry-potter-1
-    author = models.ForeignKey(Author, on_delete=models.CASCADE,)
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, related_name="books")
+    # related_name : 
 
     def get_absolute_url(self):
         return reverse("book_detail", args=[self.slug])

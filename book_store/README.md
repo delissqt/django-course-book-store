@@ -214,3 +214,55 @@ class Book(models.Model):
 
 ```
 
+
+# Filtering data
+
+`
+books_by_rowling = Book.objects.filter(author__last_name="Rowling")
+books_by_rowling
+$ <QuerySet [<Book: Harry Potter 1 (5)>]>
+`
+
+`
+books_by_rowling = Book.objects.filter(author__last_name__contains="wling")
+books_by_rowling
+$ <QuerySet [<Book: Harry Potter 1 (5)>]>
+`
+
+
+`
+jkr = Author.objects.get(first_name="J.K.")
+jkr
+$<Author: Author object (1)>
+
+jkr.book_set
+$<django.db.models.fileds.related_descriptors.create_reverse_many_to_one_manager.<locals>.RelatedManager object at 0x000001E05DC62E80>
+
+
+# Book set is like objects, just for relations...
+jkr.book_set.all()
+
+$<QuerySet [<Book: Harry Potter 1 (5)>]>
+`
+
+
+Book set is like objects, just for relations 
+Django automatically creates this property (book_set) on the author object
+It takes the class name of the related model book, turns it into all lower case, 
+is possible to use a different name. You Just have to go to the field where you set up the relation
+
+`jkr.book_set.all()`
+
+
+```
+class Book(models.Model):
+    title = models.CharField(max_length=40)
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    author = models.CharField(null=True, max_length=100)
+    is_bestselling = models.BooleanField(default=False)
+    slug = models.SlugField(default="", blank=True, null=False) 
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, related_name="books")
+
+    # related_name 
+
+```
