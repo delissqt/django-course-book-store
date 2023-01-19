@@ -177,3 +177,11 @@ This also works with numbers data
 python manage.py createsuperuser
 
 insert username, email address, password, password (again):
+
+---
+
+Different Kinds of Relationships
+
+| One-to-Many | One-to-One | Many-tom-Many |
+|-------------|------------|---------------|
+| One bokk as one author, one author wrote multiple books | One author has one address, one address belongs to one author | A book can be published in many countries, a country can publish many books |
