@@ -286,3 +286,87 @@ class Author(models.Model):
     last_name = models.CharField(max_length=50)
     address = models.OneToOneField(Address, on_delete=models.CASCADE, null=True, related_name="author")
 ```
+
+
+---
+# Many to many relationships
+
+`published_countries = models.ManyToManyField(Country)`
+
+Example
+
+`
+class Country(models.Model):
+    name = models.CharField(max_length=80)
+    code = models.CharField(max_length=2)
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=40)
+    rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
+    author = models.CharField(null=True, max_length=100)
+    is_bestselling = models.BooleanField(default=False)
+    slug = models.SlugField(default="", blank=True, null=False, db_index=True) # Harry Potter 1 => harry-potter-1
+    author = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, related_name="books") # related_name : 
+    published_countries = models.ManyToManyField(Country)
+`
+
+
+## add() method only exist in many-to-many relationships
+
+Example
+
+`
+    germany = Country(name="Germany", code="DE")
+    gernamy.save()
+    Book.objects.all()
+    $ <QuerySet [<Book: Harry Potter 1 (5)>, <Book: My Story (3)>, <Book: Lord of the Rings (4)>]>
+    mys = Book.objects.all()[1]
+    mys.published_countries.add(germany)
+`
+
+---
+
+# Circular Relations & Lazy Relations
+
+Sometimes, you might have two models that depend on each other -i.e. you end up with a **circular relationship**.
+
+Or you have a model that has a relation with it self.
+
+Or you have a model that should have a relation with some built-in model (i.e. built into Django) or a model defined in another application.
+
+Below, you find examples for all three casses that include Django's solution for these jinds of "problems": **Lazy relationships**. You can also check out the  [oficial docs](https://docs.djangoproject.com/en/3.2/ref/models/fields/#module-django.db.models.fields.related) in addition.
+
+1) Two models that have a **circular relationship**
+   
+    ````
+    class Product(models.Model):
+        # ... other fields ...
+        last_buyer = models.ForeignKey("User")
+
+    class User(models.Model):
+        # ... other fileds ...
+        created_products = models.ManyToManyField("Product")
+    ```
+
+    In this example, we have multiple relationships between the same two models. Hence we might need to define them in both models. By using the model name as a string instead of a direct reference, Django is able to resolve such dependencies.
+
+2) Relation with the **same model**
+   
+   ```
+   class User(models.Model):
+        # ... other fileds ...
+        friends = models.ManyToManyField("self")
+   ```
+
+   The special `self` keyword (used as a string value) tells Django that it should form a relationship with (other) instances of the same model.
+
+3) Relationships with **other apps** and their models (built-in or custom apps)
+
+    ```
+    class Review(models.Model):
+        # ... other fields ...
+        product = models.ForeignKey("store.Product") # '<appname>.<modelname>'
+    ```
+
+    You can reference models defined in other Django apps (no matter if created by you, via `python manage.py startapp <appname>` or if it's a built-in or third-party app) by using the app name and then the name of the model inside the app.
