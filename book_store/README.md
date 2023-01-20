@@ -266,3 +266,23 @@ class Book(models.Model):
     # related_name 
 
 ```
+
+
+---
+# Adding one-to-one Relation
+
+`address = models.OneToOneField(Address, on_delete=models.CASCADE, null=True, related_name="author")`
+
+Example 
+```
+class Address(models.Model):
+    street = models.CharField(max_length=100)
+    postal_code = models.CharField(max_length=5)
+    city = models.CharField(max_length=50)
+
+
+class Author(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    address = models.OneToOneField(Address, on_delete=models.CASCADE, null=True, related_name="author")
+```
