@@ -370,3 +370,20 @@ Below, you find examples for all three casses that include Django's solution for
     ```
 
     You can reference models defined in other Django apps (no matter if created by you, via `python manage.py startapp <appname>` or if it's a built-in or third-party app) by using the app name and then the name of the model inside the app.
+
+
+---
+
+# User Input, Forms & Class-based Views
+
+## Using User Input & Improving View Logic
+
+class base views
+| User Input, Forms & Class-based Views |
+|---------------------------------------|
+| Creating & anddling Forms |
+| Simplifying Form Management|
+| Exploring Class-based Views |
+
+We can create and handle forms outside of admin panel. Now we are talking about forms that are exposed to our website visitors.
+We´re also going to have a look at different ways of handling those forms and how we can simply fill form managament for us when working with Django.
